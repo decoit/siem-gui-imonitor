@@ -1,0 +1,107 @@
+/*
+ * Copyright (C) 2015 DECOIT GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#siemguilogo {
+	width: auto;
+	height: 48px;
+}
+
+#eventlist TH.timecol {
+	width: 100px;
+}
+
+#eventlist TH.typecol {
+	width: 100px;
+}
+
+#eventlist TH.detailcol {
+	width: 125px;
+}
+
+#eventdetails TD.attrtitle {
+	font-weight: bold;
+	width: 180px !important;
+}
+
+#incidentdetails TD.attrtitle {
+	font-weight: bold;
+	width: 125px !important;
+}
+
+#userdetails TD.attrtitle {
+	font-weight: bold;
+	width: 250px !important;
+}
+
+#ruledetails TD.attrtitle,
+#remoteruledetails TD.attrtitle {
+	font-weight: bold;
+	width: 250px !important;
+}
+
+#ruledetails TD.listoperation {
+	width: 35px !important;
+}
+
+#eventdetails TD.noborder,
+#eventdetails TH.noborder,
+#ruledetails TD.noborder,
+#ruledetails TH.noborder {
+	border: none;
+}
+
+.margintop40 {
+	margin-top: 40px;
+}
+
+.ngclickpointer {
+	cursor: pointer;
+}
+
+.incoverdue {
+	font-weight: bold;
+	color: #ff0000;
+}
+
+PRE {
+	white-space: pre-wrap;
+}
+
+TR.eventlistrow TD {
+	padding: 2px 8px 2px 8px !important;
+}
+
+DIV.modal-dialog DIV.panel-primary {
+	margin: 1px;
+}
+
+DIV.modal-dialog DIV.panel-danger {
+	margin: 1px;
+}
+
+DIV.scrollable-panel-body {
+	overflow-y: scroll !important;
+	max-height: 580px;
+}
+
+TH SPAN.tableheadsort {
+	font-size: 0.9em;
+}
+
+TH SPAN.sortactive {
+	color: #ff0000;
+}

@@ -1,0 +1,385 @@
+<!--
+ * Copyright (C) 2015 DECOIT GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<div id="eventdetails" class="row">
+	<div class="col-md-12">
+		<div class="panel panel-primary">
+			<div class="panel-heading">Details für {{ determineEventType(details.type) }}-Ereignis</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-info">
+							<div class="panel-heading">Allgemeine Informationen</div>
+							<div class="panel-body">
+								<table class="table">
+									<tbody>
+										<tr>
+											<td class="attrtitle">Icinga-Zeitstempel:</td>
+											<td>{{ formatLocalDateTime(details['icinga-timestamp']) }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Ereignis-Zeitstempel:</td>
+											<td>{{ formatLocalDateTime(details.timestamp) }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Ereignis-Typ:</td>
+											<td>{{ determineEventType(details.type) }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-info">
+							<div class="panel-heading">Spezifische Informationen</div>
+							<div class="panel-body">
+								<table class="table">
+									<!-- BEGIN SNORT EVENT DETAILS -->
+									<tbody ng-if="details.type === 'SNORT'">
+										<tr>
+											<td class="attrtitle">Event-ID:</td>
+											<td>{{ details.data['event-id'] }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Sensor (ID : Name):</td>
+											<td>{{ details.data['sensor-id'] }} : {{ details.data['sensor-name'] }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Signatur (ID : Name):</td>
+											<td>{{ details.class }} : {{ details.message }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Interface:</td>
+											<td>{{ details.data.interface }}</td>
+										</tr>
+										<tr ng-if="details.protocol !== 'NONE'">
+											<td class="attrtitle">Quelle ({{ details.protocol }}):</td>
+											<td>{{ details.ipsrc }}:{{ details.data.src }}</td>
+										</tr>
+										<tr ng-if="details.protocol !== 'NONE'">
+											<td class="attrtitle">Ziel ({{ details.protocol }}):</td>
+											<td>{{ details.ipdest }}:{{ details.data.dest }}</td>
+										</tr>
+										<tr ng-if="details.protocol === 'NONE'">
+											<td class="attrtitle">Quelle:</td>
+											<td>{{ details.ipsrc }}</td>
+										</tr>
+										<tr ng-if="details.protocol === 'NONE'">
+											<td class="attrtitle">Ziel:</td>
+											<td>{{ details.ipdest }}</td>
+										</tr>
+										<tr ng-if="details.data['icmp-type'].length > 0">
+											<td class="attrtitle">ICMP Typ:</td>
+											<td>{{ details.data['icmp-type'] }}</td>
+										</tr>
+									</tbody>
+									<!-- END SNORT EVENT DETAILS -->
+
+									<!-- BEGIN NMAP EVENT DETAILS -->
+									<tbody ng-if="details.type === 'NMAP'">
+										<tr>
+											<td class="attrtitle">Status:</td>
+											<td>{{ details.status }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">IP Adresse:</td>
+											<td>{{ details.ipdest }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Erlaubte Ports:</td>
+											<td>{{ formatNmapPortList(details.data['ports-allowed']) }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Gescannte Ports:</td>
+											<td>{{ formatNmapPortList(details.data['ports-scanned']) }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Ergebnis:</td>
+											<td ng-bind-html="formatNmapScanResult(details.data['invalid-closed-ports'], details.data['invalid-open-ports'])"></td>
+										</tr>
+									</tbody>
+									<!-- END NMAP EVENT DETAILS -->
+
+									<!-- BEGIN OPEN_VAS EVENT DETAILS -->
+									<tbody ng-if="details.type === 'OPEN_VAS'">
+										<tr>
+											<td class="attrtitle">Status:</td>
+											<td>{{ details.status }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Bericht-ID:</td>
+											<td>{{ details.class }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle" colspan="2">Schwachstellen:</td>
+										</tr>
+										<tr ng-repeat="evt in details.data">
+											<td colspan="2">
+												<table class="table">
+													<tbody>
+														<tr>
+															<td class="noborder" colspan="2"><strong>{{ evt['Name'] }}</strong><br>({{ evt['NVT'] }})</td>
+														</tr>
+														<tr>
+															<td class="attrtitle">Bedrohungsstufe:</td>
+															<td>{{ evt['Threat'] }}</td>
+														</tr>
+														<tr>
+															<td class="attrtitle">Port:</td>
+															<td>{{ evt['Port'] }}</td>
+														</tr>
+														<tr ng-if="evt.CPE !== 'not found'">
+															<td class="attrtitle">CPE:</td>
+															<td>{{ evt['CPE'] }}</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+									<!-- END OPEN_VAS EVENT DETAILS -->
+
+									<!-- BEGIN FIM EVENT DETAILS -->
+									<tbody ng-if="details.type === 'FIM'">
+										<tr>
+											<td class="attrtitle">Status:</td>
+											<td>{{ details.status }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">IP Adresse:</td>
+											<td>{{ details.ipsrc }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Datei:</td>
+											<td>{{ details.data.filename }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Operation:</td>
+											<td>{{ details.data.operation }}</td>
+										</tr>
+									</tbody>
+									<!-- END FIM EVENT DETAILS -->
+
+									<!-- BEGIN TSAD EVENT DETAILS -->
+									<tbody ng-if="details.type === 'TSAD'">
+										<tr>
+											<td class="attrtitle">Status:</td>
+											<td>{{ details.status }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Service:</td>
+											<td>{{ details.data['service-label'] }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Anomalie:</td>
+											<td>{{ details.data.anomalous }}%</td>
+										</tr>
+									</tbody>
+									<!-- END TSAD EVENT DETAILS -->
+
+									<!-- BEGIN ANDROID INFO EVENT DETAILS -->
+									<tbody ng-if="details.type === 'ANDROID' && details.class === 'info'">
+										<tr>
+											<td class="attrtitle">IP Adresse:</td>
+											<td>{{ details.ipsrc }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Ereignis-Klasse:</td>
+											<td>Geräte-Informationen</td>
+										</tr>
+										<tr>
+											<td class="attrtitle" colspan="2"></td>
+										</tr>
+										<tr>
+											<td class="attrtitle">MAC Adresse:</td>
+											<td>{{ details.data['mac'] }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Gerät gerootet:</td>
+											<td>{{ details.data.root }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle" colspan="2">Identifikation:</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">IMEI:</td>
+											<td>{{ details.data.imei }}</td>
+										</tr>
+										<tr ng-if="details.data.imsi !== null">
+											<td class="attrtitle">IMSI:</td>
+											<td>{{ details.data.imsi }}</td>
+										</tr>
+										<tr ng-if="details.data.cellnumber !== null">
+											<td class="attrtitle">Mobilfunknummer:</td>
+											<td>{{ details.data.anomalous }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Branding:</td>
+											<td>{{ details.data.brand }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Hersteller:</td>
+											<td>{{ details.data.manufacturer }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle" colspan="2">Versionen:</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Firmware-Version:</td>
+											<td>{{ details.data.firmware }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Kernel-Version:</td>
+											<td>{{ details.data.kernel }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Build-Nummer:</td>
+											<td>{{ details.data.build }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Baseband-Version:</td>
+											<td>{{ details.data.baseband }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">SELinux-Version:</td>
+											<td>{{ details.data.selinux }}</td>
+										</tr>
+									</tbody>
+									<!-- END ANDROID INFO EVENT DETAILS -->
+
+									<!-- BEGIN ANDROID APP EVENT DETAILS -->
+									<tbody ng-if="details.type === 'ANDROID' && details.class === 'apps'">
+										<tr>
+											<td class="attrtitle">IP Adresse:</td>
+											<td>{{ details.ipsrc }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Ereignis-Klasse:</td>
+											<td>App-Informationen</td>
+										</tr>
+										<tr>
+											<td class="attrtitle" colspan="2"></td>
+										</tr>
+										<tr>
+											<td class="attrtitle">App Name:</td>
+											<td>{{ details.data.name }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">App Label:</td>
+											<td>{{ details.data.label }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Version:</td>
+											<td>{{ details.data.version }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">App läuft:</td>
+											<td>{{ details.data.running }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Installiert am:</td>
+											<td>{{ formatLocalDateTime(details.data.installTimeObject) }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Aktualisiert am:</td>
+											<td>{{ formatLocalDateTime(details.data.updateTimeObject) }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle" colspan="2">Berechtigungen:</td>
+										</tr>
+										<tr ng-repeat="perm in details.data.permissions">
+											<td class="attrtitle"></td>
+											<td>{{ perm }}</td>
+										</tr>
+									</tbody>
+									<!-- END ANDROID APP EVENT DETAILS -->
+
+									<!-- BEGIN ANDROID MONITOR EVENT DETAILS -->
+									<tbody ng-if="details.type === 'ANDROID' && details.class === 'monitor'">
+										<tr>
+											<td class="attrtitle">IP Adresse:</td>
+											<td>{{ details.ipsrc }}</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Ereignis-Klasse:</td>
+											<td>Monitoring-Informationen</td>
+										</tr>
+										<tr>
+											<td class="attrtitle" colspan="2"></td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Traffic (in):</td>
+											<td>{{ details.data.trafficin }} Bytes</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Traffic (out):</td>
+											<td>{{ details.data.trafficout }} Bytes</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">CPU-Auslastung:</td>
+											<td>{{ details.data.cpuload }}%</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Speicher-Auslastung:</td>
+											<td>{{ details.data.mem }}%</td>
+										</tr>
+										<tr>
+											<td class="attrtitle" colspan="2">Prozesse:</td>
+										</tr>
+										<tr>
+											<td class="attrtitle">Anzahl:</td>
+											<td>{{ details.data.processcount }}</td>
+										</tr>
+										<tr ng-repeat="proc in details.data.processdetail">
+											<td colspan="2">
+												<table class="table">
+													<tbody>
+														<tr>
+															<td class="noborder" colspan="2"><strong>[PID:{{ proc.pid }}]</strong> {{ proc.name }}</td>
+														</tr>
+														<tr>
+															<td class="attrtitle">Benutzer-ID:</td>
+															<td>{{ proc.uid }}</td>
+														</tr>
+														<tr>
+															<td class="attrtitle">Speicher-Auslastung:</td>
+															<td>{{ proc.mem }}</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+									<!-- END ANDROID MONITOR EVENT DETAILS -->
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12 text-center">
+						<button class="btn btn-primary" ng-click="$close('Details dialog closed')">Schließen</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

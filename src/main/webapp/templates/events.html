@@ -1,0 +1,96 @@
+<!--
+ * Copyright (C) 2015 DECOIT GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<div class="panel-heading">Ereignisse</div>
+<div class="panel-body">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-info">
+				<div class="panel-heading">Filter</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-2">
+							Zeitraum:
+						</div>
+						<div class="col-md-4">
+							<span class="input-group input-group-sm">
+								<input type="text" class="form-control input-sm" datepicker-options="dateOptions" datepicker-popup="yyyy-MM-dd" is-open="dpStartOpened" max-date="maxDpStartDate" current-text="Heute" clear-text="Löschen" close-text="Schließen" ng-model="startDate" ng-required="true" ng-change="startDateChanged()" />
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="toggleDpStart($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
+							</span>
+						</div>
+						<div class="col-md-1 text-center">
+							bis
+						</div>
+						<div class="col-md-4">
+							<span class="input-group input-group-sm">
+								<input type="text" class="form-control input-sm" datepicker-options="dateOptions" datepicker-popup="yyyy-MM-dd" is-open="dpEndOpened" max-date="maxDpEndDate" current-text="Heute" clear-text="Löschen" close-text="Schließen" ng-model="endDate" ng-required="true" ng-change="endDateChanged()" />
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="toggleDpEnd($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
+							</span>
+						</div>
+						<div>
+							<button class="btn btn-primary btn-sm" ng-click="fetchEventPagination()">Abrufen</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<alert ng-show="displayTimeframeInfo" type="info">Das Abrufen der Ereignisse von mehr als einem Tag kann sehr lange dauern und benötigt viel Speicher im Browser!</alert>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 text-right">
+			<pagination total-items="totalEvents" items-per-page="itemsPerPage" max-size="15" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-model="currentPage" ng-change="pageChanged()" ng-show="showPagination"></pagination>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<table id="eventlist" class="table">
+				<thead>
+					<tr>
+						<th class="timecol">Zeit</th>
+						<th class="typecol">Typ</th>
+						<th>Inhalt</th>
+						<th class="detailcol">Details</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="event in eventsList" class="eventlistrow">
+						<td>{{ formatLocalDateTime(event['icinga-timestamp']) }}</td>
+						<td>{{ determineEventType(event.type) }}</td>
+						<td>{{ formatEventContent(event) }}</td>
+						<td><button ng-if="eventDetailsAvailable(event)" ng-click="openEventDetails($index)" type="button" class="btn btn-primary btn-xs">Details anzeigen</button></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12 text-right">
+			<pagination total-items="totalEvents" items-per-page="itemsPerPage" max-size="15" boundary-links="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" ng-model="currentPage" ng-change="pageChanged()" ng-show="showPagination"></pagination>
+		</div>
+	</div>
+</div>

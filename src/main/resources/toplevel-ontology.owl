@@ -1,0 +1,744 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.imonitor-project.com/ontology#"
+     xml:base="http://www.imonitor-project.com/ontology"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://www.imonitor-project.com/ontology"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#description -->
+
+    <owl:AnnotationProperty rdf:about="http://www.imonitor-project.com/ontology#description"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#affects -->
+
+    <owl:ObjectProperty rdf:about="http://www.imonitor-project.com/ontology#affects">
+        <rdfs:subPropertyOf rdf:resource="http://www.imonitor-project.com/ontology#dependency"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#counterMeasure -->
+
+    <owl:ObjectProperty rdf:about="http://www.imonitor-project.com/ontology#counterMeasure">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#counterMeasureOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.imonitor-project.com/ontology#counterMeasureOf">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.imonitor-project.com/ontology#counterMeasure"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#criticality -->
+
+    <owl:ObjectProperty rdf:about="http://www.imonitor-project.com/ontology#criticality">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#dependency -->
+
+    <owl:ObjectProperty rdf:about="http://www.imonitor-project.com/ontology#dependency">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#dependsBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.imonitor-project.com/ontology#dependsBy">
+        <rdfs:subPropertyOf rdf:resource="http://www.imonitor-project.com/ontology#dependency"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#dependsOn -->
+
+    <owl:ObjectProperty rdf:about="http://www.imonitor-project.com/ontology#dependsOn">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.imonitor-project.com/ontology#dependency"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#hasCounterMeasure -->
+
+    <owl:ObjectProperty rdf:about="http://www.imonitor-project.com/ontology#hasCounterMeasure">
+        <rdfs:subPropertyOf rdf:resource="http://www.imonitor-project.com/ontology#counterMeasure"/>
+        <owl:inverseOf rdf:resource="http://www.imonitor-project.com/ontology#counterMeasureOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#hasCriticality -->
+
+    <owl:ObjectProperty rdf:about="http://www.imonitor-project.com/ontology#hasCriticality">
+        <rdf:type rdf:resource="&owl;AsymmetricProperty"/>
+        <rdf:type rdf:resource="&owl;IrreflexiveProperty"/>
+        <rdfs:subPropertyOf rdf:resource="http://www.imonitor-project.com/ontology#criticality"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#isCriticalityOf -->
+
+    <owl:ObjectProperty rdf:about="http://www.imonitor-project.com/ontology#isCriticalityOf">
+        <rdfs:subPropertyOf rdf:resource="http://www.imonitor-project.com/ontology#criticality"/>
+        <owl:inverseOf rdf:resource="http://www.imonitor-project.com/ontology#hasCriticality"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#createDatetime -->
+
+    <owl:DatatypeProperty rdf:about="http://www.imonitor-project.com/ontology#createDatetime"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#AlertOperation -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#AlertOperation">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Operation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Asset -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Asset">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Information"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Countermeasure -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Countermeasure">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Information"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Criticality -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Criticality">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Information"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Customer -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Customer">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Person"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#DenialOfServiceCounterMeasures -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#DenialOfServiceCounterMeasures">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Countermeasure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Down -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Down">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Hoststate"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#EMail -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#EMail">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#IT-Process"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#GetMoreFreeHarddiskSpaceCounterMeasure -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#GetMoreFreeHarddiskSpaceCounterMeasure">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#HarddiskCounterMeasures"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#HarddiskCounterMeasures -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#HarddiskCounterMeasures">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Countermeasure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#HarddiskIncident -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#HarddiskIncident">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Incident"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#HostIncident -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#HostIncident">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Incident"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Hoststate -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Hoststate">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Information"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#IT-Process -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#IT-Process">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Process"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Impact -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Impact">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Information"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Incident -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Incident">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Information"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Information -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Information"/>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#InternalWebHosting -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#InternalWebHosting">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#IT-Process"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#LoginAttemptAlertOperation -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#LoginAttemptAlertOperation">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#AlertOperation"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#MailServer -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#MailServer">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Server"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#OpenStackServer -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#OpenStackServer">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Server"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Operation -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Operation"/>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Person -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Person">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Information"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Policy -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Policy">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Information"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Process -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Process">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Information"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Server -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Server">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Asset"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Threat -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Threat">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Information"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Unreachable -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Unreachable">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Hoststate"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Up -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Up">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Hoststate"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Vulnerability -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Vulnerability">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Information"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#WebServer -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#WebServer">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Server"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#Workstation -->
+
+    <owl:Class rdf:about="http://www.imonitor-project.com/ontology#Workstation">
+        <rdfs:subClassOf rdf:resource="http://www.imonitor-project.com/ontology#Asset"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#10.240.0.1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#10.240.0.1">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#OpenStackServer"/>
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#Server"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#172.31.1.110 -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#172.31.1.110">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#Workstation"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#172.31.193.79 -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#172.31.193.79">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#MailServer"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#CriticalProcessDependencyIncident -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#CriticalProcessDependencyIncident">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#HostIncident"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#DOWN -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#DOWN">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#Down"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#EmptyRecycleBin -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#EmptyRecycleBin">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#GetMoreFreeHarddiskSpaceCounterMeasure"/>
+        <description>Empty the recycle bin.</description>
+        <counterMeasureOf rdf:resource="http://www.imonitor-project.com/ontology#InsufficientHarddiskSpaceLeftOnDevice"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#FranzSchmidt -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#FranzSchmidt">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#Customer"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#HIGH_CRITICALITY -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#HIGH_CRITICALITY">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#Criticality"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#HerbertMeier -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#HerbertMeier">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#Customer"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#HostDownIncident -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#HostDownIncident">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#HostIncident"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#IncreaseHarddiskSize -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#IncreaseHarddiskSize">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#GetMoreFreeHarddiskSpaceCounterMeasure"/>
+        <description>Buy a new harddisk and plug it in.</description>
+        <counterMeasureOf rdf:resource="http://www.imonitor-project.com/ontology#InsufficientHarddiskSpaceLeftOnDevice"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#InsufficientHarddiskSpaceLeftOnDevice -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#InsufficientHarddiskSpaceLeftOnDevice">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#HarddiskIncident"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#InternalWikiHosting -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#InternalWikiHosting">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#InternalWebHosting"/>
+        <dependsOn rdf:resource="http://www.imonitor-project.com/ontology#10.240.0.1"/>
+        <hasCriticality rdf:resource="http://www.imonitor-project.com/ontology#HIGH_CRITICALITY"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#LOW_CRITICALITY -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#LOW_CRITICALITY">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#Criticality"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#MEDIUM_CRITICALITY -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#MEDIUM_CRITICALITY">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#Criticality"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#MaxMusterman -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#MaxMusterman">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#Customer"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#NetworkDeviceLevelDenialOfServiceCounterMeasure -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#NetworkDeviceLevelDenialOfServiceCounterMeasure">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#DenialOfServiceCounterMeasures"/>
+        <description>&quot;Besides patches and updates to fix known software problems, packet filtering is a
+common DoS countermeasure. For example, to hinder smurf attacks, it may be wise for a
+network to either disallow broadcast ping requests to enter the network from outside, or to set up
+a firewall that rejects all incoming echo request packets. Also, the use of IP address spoofing is a
+common thread to the majority of DoS attacks. Ingress and egress filtering can be used to help
+keep spoofed packets from reaching their destination. Suppose that the ISP in Figure 6 owns the
+router shown that provides the end network with Internet access and that the ISP knows the valid
+address space of packets trying to enter through this router. If a packet is trying to enter the ISP
+and purports to be from an address that is outside of this valid address space, then it is clearly
+spoofed. This packet can be filtered out, and the spoof attempt can be logged [11].
+Figure 6
+–
+Network Ingress Example
+Egress filtering involves the same concept from the end network
+’
+s prospective. With
+egress filtering, the network
+’
+s border router checks packets as they leave the network. Packets
+purporting to come from addresses outside of the network
+’
+s address space are filtered out and
+logged. This makes the network less appealing for hackers to use as a base from which to launch
+attacks. However, this method does not prevent someone from spoofing an address to a different
+address within the network
+’
+s address space. Ingress and egress filtering cannot be used in all
+networks. For example, a major ISP cannot use egress filtering because of its need to forward
+traffic that is not part of its own immediate addressing space [10].&quot;
+
+Taken from http://www.princeton.edu/~rblee/ELE572Papers/karig01DoS.pdf</description>
+        <counterMeasureOf rdf:resource="http://www.imonitor-project.com/ontology#HostDownIncident"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#OSLevelDenialOfServiceCounterMeasure -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#OSLevelDenialOfServiceCounterMeasure">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#DenialOfServiceCounterMeasures"/>
+        <description>&quot;Connection depletion is particularly dangerous because of its asymmetric nature,
+meaning that an attacker with a low bandwidth connection disable a much more powerful machine with a faster connection. One OS protocol implementation solution to TCP SYN
+flooding is the use of SYN cookies, an idea developed by Dan Bernstein and Eric Schenk. The
+underlying concept is to avoid allocating resources until the connection is complete, i.e. when the
+server has received the client
+’
+s ACK. SYN cookies are based on the observation that most of the
+state that is normally stored upon the reception of a SYN request can be gleaned from the last
+ACK. The main exception is the MSS option, which must be encoded in the cookie. In the SYN
+cookie approach, when the backlog is filled, the initial server sequence number
+y
+is set as a
+cookie. There are various possibilities for calculating the cookie., one of which is shown below:
+z
+= (
+t
+% 2
+5
+)(2
+27
+) + (
+m
+)(2
+24
+)
++ MD5
+24 bits
+(secret,
+t
+, source addr., source port, dest. addr., dest. port, secret)
+y
+=
+x
++
+z
+An intermediate value
+z
+is calculated. The five most significant bits consist of the lower five bits
+of a 32 bit counter
+t
+that increases every minute. This prevents the initial sequence numbers
+from increasing too quickly. The next three bits are an encoding of the MSS. The lower 24 bits
+are a secure, secret hash (such as MD5) of the counter value and the source and destination
+addresses and ports. This introduces randomness into the cookie, making it difficult for an
+attacker to guess. Finally, the client
+’
+s initial sequence number is added to
+z
+to give the cookie
+y
+.
+This ensures that the server
+’
+s initial sequence numbers increase at least as quickly as the client
+’
+s
+does [1].
+The ACK returned by the client to complete the connection must correctly specify
+y
++1 in
+the acknowledgement field of the packet. To recover the cookie, the server subtracts one from
+the value in the ACK and also subtracts
+x
+. The server calculates a secret hash based on the
+information provided in the ACK packet as well as the current value of
+t
+. Hashes are also
+calculated based on the past few values of
+t
+. If one of these calculated hashes agrees with the
+cookie recovered from the ACK packet, then memory is allocated to the connection.
+Two other proposed methods for prevention of denial of service due to connection
+depletion attacks are to shorten the timeout period or to randomly drop a connection when the
+backlog is full. The problem with these methods is that there is a risk of denying a legitimate
+client access, and decreasing the timeout may penalize users with slow connections.
+Lazy receiver processing, another example of an OS method, can help make servers more
+robust when faced with data flooding attacks. Lazy receiver processing, developed by Druschel
+and Banga, focuses on reworking the network subsystem to improve server performance under
+high load conditions. Arrival of a packet signals a hardware interrupt. Many traditional
+operating systems place the packet in an IP queue and post a software interrupt. In the context of
+this software interrupt, IP processing is performed, protocol processing for protocols riding on IP
+is performed, and the packet is then placed in the appropriate socket queue based on its
+destination port. If a receiver is overloaded, packets may be dropped from socket queues to shed
+load. The downside to this is that resources have already been wasted on the packets by the time
+they reach the socket queue. Arrival of new packets will interrupt application processes to do
+processing on the newly arrived packets. Protocol processing is done without regard to which
+applications the newly arrived packets are bound. This can allow traffic destined for one
+application to choke out traffic destined for other applications. This type of network subsystem
+can lead to receiver livelock in high load situations, since the system may devote all of its
+resources to processing incoming packets, leaving none left to devote to the receiving
+applications [9] In the lazy receiver processing system, packets are initially passed to socket queues
+instead of a shared IP queue. Incoming packets are scheduled for protocol processing at the
+priority of the application that receives the packets, and protocol processing does not occur until
+the application requests the packets. This diminishes the need for interrupt-driven processing.
+Load shedding is done early so that resources are not wasted on packets that will eventually be
+dropped anyway. When a socket
+’
+s receive queue fills, the network interface discards additional
+packets destined for that socket [9].&quot;
+
+Taken from http://www.princeton.edu/~rblee/ELE572Papers/karig01DoS.pdf</description>
+        <counterMeasureOf rdf:resource="http://www.imonitor-project.com/ontology#HostDownIncident"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#SendOrReceiveEMailsProcess -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#SendOrReceiveEMailsProcess">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#EMail"/>
+        <dependsOn rdf:resource="http://www.imonitor-project.com/ontology#10.240.0.1"/>
+        <affects rdf:resource="http://www.imonitor-project.com/ontology#FranzSchmidt"/>
+        <hasCriticality rdf:resource="http://www.imonitor-project.com/ontology#HIGH_CRITICALITY"/>
+        <affects rdf:resource="http://www.imonitor-project.com/ontology#MaxMusterman"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#UNREACHABLE -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#UNREACHABLE">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#Unreachable"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.imonitor-project.com/ontology#UP -->
+
+    <owl:NamedIndividual rdf:about="http://www.imonitor-project.com/ontology#UP">
+        <rdf:type rdf:resource="http://www.imonitor-project.com/ontology#Up"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+

@@ -1,0 +1,307 @@
+<!--
+ * Copyright (C) 2015 DECOIT GmbH
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<div class="row">
+	<div class="col-md-4">
+		<div class="panel panel-info">
+			<div class="panel-heading">Servergespeicherte Regeln</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div ng-show="rules.remote === null">
+							<ul class="list-group">
+								<li class="list-group-item">Lade Regelliste...</li>
+							</ul>
+						</div>
+						<div ng-show="rules.remote !== null && rules.remote.length === 0">
+							<ul class="list-group">
+								<li class="list-group-item">Keine servergespeicherten Regeln gefunden</li>
+							</ul>
+						</div>
+						<div class="list-group" ng-hide="rules.remote === null || rules.remote.length === 0">
+							<a class="list-group-item" href="" ng-class="{active: activeRemoteIndex === {{ $index }}}" ng-click="showRemoteRuleOperations($index)" ng-repeat="remoterule in rules.remote">
+								<span class="badge">R-ID: {{ remoterule.dtoId }}</span>
+								{{ remoterule.name }}
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-8">
+		<div class="panel panel-info">
+			<div class="panel-heading">Operationen</div>
+			<div class="panel-body" ng-hide="activeRule.remote !== null">
+				Bitte links eine servergespeicherte Regel auswählen
+			</div>
+			<div class="panel-body" ng-show="activeRule.remote !== null">
+				<div id="remoteruledetails" class="row">
+					<div class="col-md-12">
+						<table class="table">
+							<tbody>
+								<tr>
+									<td class="attrtitle">Remote ID:</td>
+									<td>{{ activeRule.remote.dtoId }}</td>
+									<td class="listoperation text-right"></td>
+								</tr>
+								<tr>
+									<td class="attrtitle">Name:</td>
+									<td>{{ activeRule.remote.name }}</td>
+									<td class="listoperation text-right"></td>
+								</tr>
+								<tr>
+									<td class="attrtitle">Beschreibung:</td>
+									<td>{{ activeRule.remote.description }}</td>
+									<td class="listoperation text-right"></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<table class="table margintop40">
+							<tbody>
+								<tr>
+									<th colspan="3" class="attrtitle noborder">Bedingung</th>
+								</tr>
+								<tr>
+									<td class="attrtitle">Query:</td>
+									<td><pre>{{ activeRule.remote.condition.query }}</pre></td>
+									<td class="listoperation text-right"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 text-right">
+						<button type="button" class="btn btn-primary" ng-click="openDownloadDialog()">Download</button>
+						<button type="button" class="btn btn-primary" ng-click="closeRemoteDetails()">Schließen</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+		<div class="panel panel-info">
+			<div class="panel-heading">Lokale Regeln</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div>
+							<button type="button" class="btn btn-primary" ng-click="createNewRule()">Neue Regel</button>
+						</div>
+					</div>
+				</div>
+				<div class="row margintop40">
+					<div class="col-md-12">
+						<div ng-show="local.remote === null">
+							<ul class="list-group">
+								<li class="list-group-item">Lade Regelliste...</li>
+							</ul>
+						</div>
+						<div ng-show="rules.local !== null && rules.local.length === 0">
+							<ul class="list-group">
+								<li class="list-group-item">Keine lokalen Regeln gefunden</li>
+							</ul>
+						</div>
+						<div class="list-group" ng-hide="rules.local === null || rules.local.length === 0">
+							<a class="list-group-item" href="" ng-class="{active: activeLocalIndex === {{ $index }}}" ng-click="showLocalRuleDetails($index)" ng-repeat="localrule in rules.local">
+								<span class="badge" ng-if="localrule.dtoId > 0">R-ID: {{ localrule.dtoId }}</span>
+								{{ localrule.name }}
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-8">
+		<div class="panel panel-info">
+			<div class="panel-heading">Regeldetails</div>
+			<div class="panel-body" ng-hide="activeRule.local !== null">
+				Bitte links eine lokale Regel auswählen oder erstellen
+			</div>
+			<div class="panel-body" ng-show="activeRule.local !== null">
+				<div class="row">
+					<div class="col-md-2 text-left">
+						<button type="button" class="btn btn-success" ng-click="storeLocalDetails()">Speichern</button>
+					</div>
+					<div class="col-md-2 text-left">
+						<button type="button" class="btn btn-danger" ng-click="deleteLocalRule()" ng-if="activeRule.local.entityId > 0">Löschen</button>
+					</div>
+					<div class="col-md-8 text-right">
+						<button type="button" class="btn btn-primary" ng-click="openUploadDialog()" ng-if="activeRule.local.entityId > 0">Upload</button>
+						<button type="button" class="btn btn-primary" ng-click="closeLocalDetails()">Schließen</button>
+					</div>
+				</div>
+				<div id="ruledetails" class="row margintop40">
+					<div class="col-md-12">
+						<table class="table">
+							<tbody>
+								<tr>
+									<td class="attrtitle">Lokale ID:</td>
+									<td>{{ activeRule.local.entityId }}</td>
+									<td class="listoperation text-right"></td>
+								</tr>
+								<tr>
+									<td class="attrtitle">Remote ID:</td>
+									<td>{{ activeRule.local.dtoId }}</td>
+									<td class="listoperation text-right"></td>
+								</tr>
+								<tr>
+									<td class="attrtitle">Name:</td>
+									<td><input type="text" class="form-control input-sm" ng-model="activeRule.local.name"></td>
+									<td class="listoperation text-right"></td>
+								</tr>
+								<tr>
+									<td class="attrtitle">Beschreibung:</td>
+									<td><input type="text" class="form-control input-sm" ng-model="activeRule.local.description"></td>
+									<td class="listoperation text-right"></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<table class="table margintop40">
+							<tbody>
+								<tr>
+									<th colspan="3" class="attrtitle noborder">Bedingung</th>
+								</tr>
+								<tr>
+									<td class="attrtitle">Query:</td>
+									<td><textarea rows="7" class="form-control input-sm" ng-model="activeRule.local.condition.query"></textarea></td>
+									<td class="listoperation text-right"></td>
+								</tr>
+							</tbody>
+						</table>
+
+						<table class="table margintop40">
+							<tbody>
+								<tr>
+									<th colspan="3" class="attrtitle noborder">Aktion</th>
+								</tr>
+								<tr>
+									<td class="attrtitle">Vorfallname:</td>
+									<td><input type="text" class="form-control input-sm" ng-model="activeRule.local.action.incidentName"></td>
+									<td class="listoperation text-right"></td>
+								</tr>
+								<tr>
+									<td class="attrtitle">Risiko:</td>
+									<td><input type="text" class="form-control input-sm" ng-model="activeRule.local.action.risk"></td>
+									<td class="listoperation text-right"></td>
+								</tr>
+								<tr ng-repeat="q in activeRule.local.action.query track by $index">
+									<td class="attrtitle" ng-class="{noborder: $index > 0}">
+										<span ng-if="$index === 0">Queries:</span>
+									</td>
+									<td ng-class="{noborder: $index > 0}">
+										<textarea rows="7" class="form-control input-sm" ng-model="activeRule.local.action.query[$index]"></textarea>
+									</td>
+									<td class="listoperation text-right" ng-class="{noborder: $index > 0}">
+										<a class="ngclickpointer" title="entfernen" ng-click="removeQuery($index)"><span class="glyphicon glyphicon-minus"></span></a>
+									</td>
+								</tr>
+								<tr>
+									<td class="attrtitle" ng-class="{noborder: activeRule.local.action.query.length > 0}">
+										<span ng-if="activeRule.local.action.query.length === 0">Queries:</span>
+									</td>
+									<td ng-class="{noborder: activeRule.local.action.query.length > 0}"></td>
+									<td class="listoperation text-right" ng-class="{noborder: activeRule.local.action.query.length > 0}">
+										<a class="ngclickpointer" title="hinzufügen" ng-click="addQuery()"><span class="glyphicon glyphicon-plus"></span></a>
+									</td>
+								</tr>
+								<tr ng-repeat="uq in activeRule.local.action.updateQuery track by $index">
+									<td class="attrtitle" ng-class="{noborder: $index > 0}">
+										<span ng-if="$index === 0">Update-Queries:</span>
+									</td>
+									<td ng-class="{noborder: $index > 0}">
+										<textarea rows="7" class="form-control input-sm" ng-model="activeRule.local.action.updateQuery[$index]"></textarea>
+									</td>
+									<td class="listoperation text-right" ng-class="{noborder: $index > 0}">
+										<a class="ngclickpointer" title="entfernen" ng-click="removeUpdateQuery($index)"><span class="glyphicon glyphicon-minus"></span></a>
+									</td>
+								</tr>
+								<tr>
+									<td class="attrtitle" ng-class="{noborder: activeRule.local.action.updateQuery.length > 0}">
+										<span ng-if="activeRule.local.action.updateQuery.length === 0">Update-Queries:</span>
+									</td>
+									<td ng-class="{noborder: activeRule.local.action.updateQuery.length > 0}"></td>
+									<td class="listoperation text-right" ng-class="{noborder: activeRule.local.action.updateQuery.length > 0}">
+										<a class="ngclickpointer" title="hinzufügen" ng-click="addUpdateQuery()"><span class="glyphicon glyphicon-plus"></span></a>
+									</td>
+								</tr>
+								<tr ng-repeat="rec in activeRule.local.action.recommendation track by $index">
+									<td class="attrtitle" ng-class="{noborder: $index > 0}">
+										<span ng-if="$index === 0">Handlungsempfehlungen:</span>
+									</td>
+									<td ng-class="{noborder: $index > 0}">
+										<textarea rows="3" class="form-control input-sm" ng-model="activeRule.local.action.recommendation[$index]"></textarea>
+									</td>
+									<td class="listoperation text-right" ng-class="{noborder: $index > 0}">
+										<a class="ngclickpointer" title="entfernen" ng-click="removeRecommendation($index)"><span class="glyphicon glyphicon-minus"></span></a>
+									</td>
+								</tr>
+								<tr>
+									<td class="attrtitle" ng-class="{noborder: activeRule.local.action.recommendation.length > 0}">
+										<span ng-if="activeRule.local.action.recommendation.length === 0">Handlungsempfehlungen:</span>
+									</td>
+									<td ng-class="{noborder: activeRule.local.action.recommendation.length > 0}"></td>
+									<td class="listoperation text-right" ng-class="{noborder: activeRule.local.action.recommendation.length > 0}">
+										<a class="ngclickpointer" title="hinzufügen" ng-click="addRecommendation()"><span class="glyphicon glyphicon-plus"></span></a>
+									</td>
+								</tr>
+								<tr ng-repeat="expl in activeRule.local.action.explanation track by $index">
+									<td class="attrtitle" ng-class="{noborder: $index > 0}">
+										<span ng-if="$index === 0">Erklärungen:</span>
+									</td>
+									<td ng-class="{noborder: $index > 0}">
+										<textarea rows="3" class="form-control input-sm" ng-model="activeRule.local.action.explanation[$index]"></textarea>
+									</td>
+									<td class="listoperation text-right" ng-class="{noborder: $index > 0}">
+										<a class="ngclickpointer" title="entfernen" ng-click="removeExplanation($index)"><span class="glyphicon glyphicon-minus"></span></a>
+									</td>
+								</tr>
+								<tr>
+									<td class="attrtitle" ng-class="{noborder: activeRule.local.action.explanation.length > 0}">
+										<span ng-if="activeRule.local.action.explanation.length === 0">Erklärungen:</span>
+									</td>
+									<td ng-class="{noborder: activeRule.local.action.explanation.length > 0}"></td>
+									<td class="listoperation text-right" ng-class="{noborder: activeRule.local.action.explanation.length > 0}">
+										<a class="ngclickpointer" title="hinzufügen" ng-click="addExplanation()"><span class="glyphicon glyphicon-plus"></span></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-2 text-left">
+						<button type="button" class="btn btn-success" ng-click="storeLocalDetails()">Speichern</button>
+					</div>
+					<div class="col-md-2 text-left">
+						<button type="button" class="btn btn-danger" ng-click="deleteLocalRule()" ng-if="activeRule.local.entityId > 0">Löschen</button>
+					</div>
+					<div class="col-md-8 text-right">
+						<button type="button" class="btn btn-primary" ng-click="openUploadDialog()" ng-if="activeRule.local.entityId > 0">Upload</button>
+						<button type="button" class="btn btn-primary" ng-click="closeLocalDetails()">Schließen</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
